@@ -20,16 +20,8 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "noImplicitAny": false,
-    "outDir": "./dist/",
-    "baseUrl": ".",
-    "paths": {
-      "components": ["./src/components"],
-      "components/*": ["./src/components/*"],
-      "interfaces": ["./src/interfaces/"],
-      "interfaces/*": ["./src/interfaces/*"],
-      "utils/*": ["./src/utils/*"],
-      "static/*": ["./static/*"]
-    }
+    "outDir": "./dist/"
   },
-  "include": ["./src/**/*"]
+  "include": ["./lib/**/*", "src/App.tsx"],
+  "exclude": ["./dist/"]
 }

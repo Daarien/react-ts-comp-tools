@@ -3,7 +3,7 @@ import ErrorBoundary from './ErrorBoundary';
 // import { Theme } from '../../store/theme/themeSettings';
 import styled from 'styled-components';
 import { rgb, rgba } from 'polished';
-import { Paper } from '.';
+import { Paper } from 'components';
 
 const Wrapper = styled('div')`
   width: 1120px;
