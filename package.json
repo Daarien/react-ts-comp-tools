@@ -1,0 +1,59 @@
+{
+  "name": "react-ts-comp-tools",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "webpack --mode development",
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daarien/react-ts-comp-tools.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Daarien/react-ts-comp-tools/issues"
+  },
+  "homepage": "https://github.com/Daarien/react-ts-comp-tools#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/free-regular-svg-icons": "^5.8.2",
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^8.1.0",
+    "polished": "^3.4.0",
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.9",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "@types/node": "^12.0.4",
+    "@types/react": "^16.8.19",
+    "@types/react-dom": "^16.8.4",
+    "@types/styled-components": "^4.1.15",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "css-loader": "^2.1.1",
+    "eslint-plugin-import": "^2.17.3",
+    "html-webpack-plugin": "^3.2.0",
+    "prettier": "^1.17.1",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^0.23.1",
+    "typescript": "^3.5.1",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.5.1"
+  }
+}
