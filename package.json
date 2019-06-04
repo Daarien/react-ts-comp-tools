@@ -5,8 +5,7 @@
   "scripts": {
     "test": "webpack --mode development",
     "start": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production",
-    "tsc": "tsc"
+    "build": "rm ./utils/* && rm ./components/* && rm ./interfaces/* && tsc"
   },
   "repository": {
     "type": "git",
@@ -15,7 +14,9 @@
   "main": "src/index.tsx",
   "files": [
     "src",
-    "lib"
+    "components",
+    "interfaces",
+    "utils"
   ],
   "types": "./lib/**/*",
   "keywords": [],
