@@ -22,5 +22,5 @@
     "outDir": "."
   },
   "include": ["./src/tools"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "./src/*.*"]
 }
