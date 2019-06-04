@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import Router from 'next/router';
-import { IButtonProps } from 'interfaces';
+import { IButtonProps } from '../interfaces';
 import { Button, FaIcon } from '../components';
 
 interface IBackButtonProps extends IButtonProps {
