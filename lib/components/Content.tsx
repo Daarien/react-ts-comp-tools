@@ -1,9 +1,9 @@
 import React, { HTMLAttributes } from 'react';
 import ErrorBoundary from './ErrorBoundary';
+import Paper from './Paper';
 // import { Theme } from '../../store/theme/themeSettings';
 import styled from 'styled-components';
 import { rgb, rgba } from 'polished';
-import { Paper } from '.';
 
 const Wrapper = styled('div')`
   width: 1120px;

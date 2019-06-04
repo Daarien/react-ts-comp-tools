@@ -1,21 +1,4 @@
 {
   "presets": ["@babel/preset-env", "@babel/preset-react"],
-  "plugins": [
-    "@babel/proposal-class-properties",
-    "@babel/proposal-object-rest-spread",
-    [
-      "module-resolver",
-      {
-        "root": ["./"],
-        "alias": {
-          "components": "./src/components",
-          "interfaces": "./src/interfaces",
-          "static": "./static",
-          "store": "./src/store",
-          "utils": "./src/utils",
-          "img": "./static/img/"
-        }
-      }
-    ]
-  ]
+  "plugins": ["@babel/proposal-class-properties", "@babel/proposal-object-rest-spread"]
 }

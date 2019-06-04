@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
-import { ErrorResponse, TQueryParams } from 'interfaces';
-import { AnnounceStatus } from 'interfaces/announcement';
+import { ErrorResponse, TQueryParams } from '../interfaces';
+import { AnnounceStatus } from '../interfaces/announcement';
 
 export const t_host = 'http://tobacco.oms-dev.os-pub.x5.ru';
 export const a_host = 'http://announcement.oms-dev.os-pub.x5.ru';
