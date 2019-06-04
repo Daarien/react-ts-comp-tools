@@ -22,6 +22,6 @@
     "noImplicitAny": false,
     "outDir": "./dist/"
   },
-  "include": ["./lib/**/*", "src/App.tsx"],
+  "include": ["./src/**/*"],
   "exclude": ["./dist/"]
 }
