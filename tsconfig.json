@@ -19,7 +19,11 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "noImplicitAny": false,
-    "outDir": "."
+    "outDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["src/tools/components/*"]
+    }
   },
   "include": ["./src/tools"],
   "exclude": ["node_modules", "./src/*.*"]
