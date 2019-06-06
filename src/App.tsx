@@ -1,6 +1,6 @@
 import React from 'react';
-import { Paper } from './tools/components';
-import Login from './tools/components/modules/Login';
+import { Paper } from 'components';
+import Login from 'components/modules/Login';
 
 export default function App() {
   return (
