@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper } from './tools/components';
+import { Paper } from './components';
 
 export default function App() {
   return (

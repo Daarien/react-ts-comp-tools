@@ -19,8 +19,8 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "noImplicitAny": false,
-    "outDir": "."
+    "outDir": "./dist"
   },
-  "include": ["./src/tools"],
+  "include": ["src/components"],
   "exclude": ["node_modules"]
 }
