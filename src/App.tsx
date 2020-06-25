@@ -1,13 +1,20 @@
-import React from 'react';
-import { Paper } from './components';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { ThemeProvider } from "./components/styled-components";
 
-export default function App() {
+import { theme } from "./components/theme";
+import MainPage from "./pages/Main";
+
+function App() {
   return (
-    <div>
-      <h3>Test page</h3>
-      <Paper>
-        <div>This is Paper component</div>
-      </Paper>
-    </div>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Switch>
+          <Route component={MainPage} />
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
+
+export default App;

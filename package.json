@@ -1,54 +1,69 @@
 {
   "name": "react-ts-comp-tools",
-  "version": "1.2.5",
-  "description": "React TS component tools",
+  "version": "1.5.0",
+  "license": "MIT",
   "scripts": {
-    "test": "webpack --mode development",
-    "start": "webpack-dev-server --mode development --open",
-    "build": "rm ./dist/* && tsc"
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "build": "react-scripts build",
+    "clean": "rimraf dist/",
+    "copy-files": "copyfiles -u 2 src/components/svg/**/* dist",
+    "dist": "yarn run clean && tsc --project tsconfig.publish.json && yarn run copy-files"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Daarien/react-ts-comp-tools.git"
   },
-  "main": "src/index.tsx",
-  "files": [
-    "dist"
-  ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Daarien/react-ts-comp-tools/issues"
   },
-  "homepage": "https://github.com/Daarien/react-ts-comp-tools#readme",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "author": "Daarien",
   "dependencies": {
-    "polished": "^3.4.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "styled-components": "^4.4.1"
-  },
-  "peerDependencies": {
-    "react": "^16.12.0"
+    "clsx": "1.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/preset-react": "^7.7.0",
-    "@types/node": "^12.12.8",
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.9.4",
-    "@types/styled-components": "^4.4.0",
-    "awesome-typescript-loader": "^5.2.1",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.2.0",
-    "html-webpack-plugin": "^3.2.0",
-    "prettier": "^1.19.1",
-    "source-map-loader": "^0.2.4",
-    "style-loader": "^1.0.0",
-    "typescript": "^3.7.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "@testing-library/dom": "^7.18.1",
+    "@testing-library/jest-dom": "^5.11.0",
+    "@testing-library/react": "^10.4.3",
+    "@testing-library/user-event": "^12.0.11",
+    "@types/jest": "^26.0.3",
+    "@types/node": "^14.0.14",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/styled-components": "^5.1.0",
+    "copyfiles": "^2.3.0",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-is": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "styled-components": "5.1.1",
+    "typescript": "~3.9.5"
+  },
+  "peerDependencies": {
+    "react": ">=16.13.1",
+    "styled-components": ">=5.1.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

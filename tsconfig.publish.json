@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "outDir": "dist",
+    "noEmit": false,
+    "declaration": true
+  },
+  "include": ["src/react-app-env.d.ts", "src/components"]
+}
