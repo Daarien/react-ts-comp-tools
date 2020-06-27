@@ -1,13 +1,13 @@
-import React from "react";
-import styled from "styled-components/macro";
-import clsx from "clsx";
-import FormLabel, { FormLabelProps } from "../FormLabel";
+import React from 'react';
+import styled from 'styled-components/macro';
+import clsx from 'clsx';
+import FormLabel, { FormLabelProps } from '../FormLabel';
 
 export interface InputLabelProps extends FormLabelProps {}
 
 function InputLabel(props: InputLabelProps) {
-  const { classes, className, ...other } = props;
-  return <FormLabel className={clsx("SuuiInputLabel", className)} {...other} />;
+  const { className, ...other } = props;
+  return <FormLabel className={clsx('SuuiInputLabel', className)} {...other} />;
 }
 
 export default styled(InputLabel)`

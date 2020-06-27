@@ -6,27 +6,20 @@ import clsx from "clsx";
 export interface SwitchBaseProps
   extends Omit<IconButtonProps, "children" | "onChange" | "type" | "value"> {
   autoFocus?: boolean;
-  checked?: boolean;
   icon: React.ReactNode;
   checkedIcon: React.ReactNode;
-  defaultChecked?: boolean;
-  disabled?: boolean;
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-  inputRef?: React.Ref<HTMLInputElement>;
   /**
-   * Name attribute of the `input` element.
+   * Attribute of the `input` element.
    */
   name?: string;
-  readOnly?: boolean;
-  /**
-   * If `true`, the `input` element will be required.
-   */
-  required?: boolean;
   tabIndex?: number;
+  checked?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+  defaultChecked?: boolean;
+  inputRef?: React.Ref<HTMLInputElement>;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   type?: React.InputHTMLAttributes<HTMLInputElement>["type"];
-  /**
-   * The value of the component. The DOM API casts this to a string.
-   */
   value?: React.InputHTMLAttributes<HTMLInputElement>["value"];
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

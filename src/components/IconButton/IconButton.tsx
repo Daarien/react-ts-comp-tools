@@ -13,7 +13,7 @@ function IconButton(props: IconButtonProps) {
       disabled={disabled}
       {...other}
     >
-      <span className="label">{children}</span>
+      <span className="IconButton-label">{children}</span>
     </BaseButton>
   );
 }
@@ -28,7 +28,7 @@ export default styled(IconButton)`
     background-color: transparent;
     color: ${({ theme }) => theme.palette.action.disabled};
   }
-  .label {
+  .IconButton-label {
     width: 100%;
     display: inline-flex;
     align-items: inherit;

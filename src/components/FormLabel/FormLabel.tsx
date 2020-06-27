@@ -1,41 +1,47 @@
-import React from "react";
-import styled from "styled-components/macro";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
+import styled from '../styled-components';
+import formControlState from '../FormControl/formControlState';
+import useFormControl from '../FormControl/useFormControl';
+import { FormControlState } from '../FormControl/FormControlContext';
 
-export interface FormLabelProps
-  extends React.LabelHTMLAttributes<HTMLLabelElement> {
-  children?: React.ReactNode;
+export interface FormLabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   disabled?: boolean;
   error?: boolean;
   focused?: boolean;
   required?: boolean;
-  classes?: Record<FormLabelClassKey, string>;
+  component?: React.ElementType;
 }
-
-export type FormLabelClassKey =
-  | "root"
-  | "focused"
-  | "disabled"
-  | "error"
-  | "required"
-  | "asterisk";
 
 function FormLabel(props: FormLabelProps) {
   const {
     children,
-    classes,
     className,
-    color,
     disabled,
     error,
     focused,
     required,
+    component: Component = 'label',
     ...other
   } = props;
+
+  const formControl = useFormControl();
+  const fcs = formControlState({
+    props,
+    formControl,
+    states: ['required', 'focused', 'disabled', 'error'],
+  }) as { [K in 'required' | 'focused' | 'disabled' | 'error']: FormControlState[K] };
+
   return (
-    <label className={clsx(className)} {...other}>
+    <Component
+      className={clsx(
+        { focused: fcs.focused, disabled: fcs.disabled, error: fcs.error },
+        className
+      )}
+      {...other}
+    >
       {children}
-    </label>
+    </Component>
   );
 }
 

@@ -9,7 +9,7 @@ const defaultCheckedIcon = <img src={CheckOnIcon} alt="check-on" />;
 const defaultIcon = <img src={CheckOffIcon} alt="check-off" />;
 
 export interface CheckboxProps
-  extends Omit<SwitchBaseProps, "checkedIcon" | "icon" | "type"> {
+  extends Omit<SwitchBaseProps, "icon" | "checkedIcon" | "type"> {
   icon?: React.ReactNode;
   checkedIcon?: React.ReactNode;
   size?: "small" | "medium";

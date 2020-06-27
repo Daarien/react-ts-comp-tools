@@ -1,27 +1,28 @@
-import React from "react";
-import styled from "styled-components";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
+import styled from 'styled-components';
+import FormControlContext from './FormControlContext';
 
-export interface FormControlProps {
-  children?: React.ReactNode;
+export interface FormControlProps extends React.HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
   error?: boolean;
   focused?: boolean;
   required?: boolean;
   fullWidth?: boolean;
-  className?: string;
+  component?: React.ElementType;
 }
-export type FormControlClassKey = "root" | "fullWidth";
 
 function FormControl(props: FormControlProps) {
   const {
     children,
     className,
+    error = false,
     disabled = false,
-    // error = false,
+    required = false,
     fullWidth = false,
     focused: visuallyFocused,
-    // required = false,
+    component: Component = 'div',
+
     ...other
   } = props;
 
@@ -32,10 +33,26 @@ function FormControl(props: FormControlProps) {
     setFocused(false);
   }
 
+  const childContext = {
+    disabled,
+    error,
+    focused,
+    required,
+    fullWidth,
+    onBlur: () => {
+      setFocused(false);
+    },
+    onFocus: () => {
+      setFocused(true);
+    },
+  };
+
   return (
-    <div className={clsx({ fullWidth }, className)} {...other}>
-      {children}
-    </div>
+    <FormControlContext.Provider value={childContext}>
+      <Component className={clsx({ fullWidth }, className)} {...other}>
+        {children}
+      </Component>
+    </FormControlContext.Provider>
   );
 }
 
@@ -45,12 +62,12 @@ export default styled(FormControl)`
   position: relative;
   /** Reset fieldset default style. */
   min-width: 0;
+  padding: 0;
   margin: 0;
   border: 0;
   vertical-align: top; /** Fix alignment issue on Safari. */
   margin-top: 16px;
   margin-bottom: 8px;
-  padding: 14px 0;
   &.fullWidth {
     width: 100%;
   }
