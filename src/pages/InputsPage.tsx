@@ -18,22 +18,23 @@ export default function InputsPage() {
   }
 
   return (
-    <div>
+    <Container>
       <h2>Inputs expamles</h2>
       <hr />
       <h4>Simple textfield with placeholer</h4>
-      <p>
+      <section>
         <TextField placeholder="placeholer" />
-      </p>
+      </section>
       <h4>Textfield with label, default value and helper text</h4>
-      <p>
+      <section>
         <TextField
           label="Simple text field"
           defaultValue="Default value"
           helperText="This is helper text"
         />
-      </p>
-      <p>
+      </section>
+      <h3>Checkboxes</h3>
+      <section>
         <Box>
           <label htmlFor="check-1">Uncontrolled checkbox</label>
           <Checkbox id="check-1" />
@@ -46,16 +47,30 @@ export default function InputsPage() {
           <label htmlFor="check-3">Contolled checkbox</label>
           <Checkbox id="check-3" checked={checkboxState} onChange={handleCheckboxChange} />
         </Box>
-      </p>
-      <p>
+      </section>
+      <h3>Radio buttons</h3>
+      <section>
         <RadioButtonsGroup />
-      </p>
-    </div>
+      </section>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  h3 {
+    color: white;
+    background: linear-gradient(to right, green, white);
+    padding: 4px 8px;
+    margin-left: -8px;
+  }
+  section {
+    margin: 16px 0;
+  }
+`;
+
 const Box = styled.div`
   display: inline-flex;
+  align-items: center;
   margin-right: 24px;
   label {
     margin-right: 8px;
@@ -69,8 +84,12 @@ function RadioButtonsGroup() {
     setValue(event.target.value);
   };
 
+  function handleFormControlEventBubbling(e: ChangeEvent<HTMLInputElement>) {
+    console.log('handleFormControlEventBubbling -> e.target.value', e.target.value);
+  }
+
   return (
-    <FormControl component="fieldset">
+    <FormControl component="fieldset" onChange={handleFormControlEventBubbling}>
       <FormLabel component="legend">Gender</FormLabel>
       <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
         <FormControlLabel value="female" control={<Radio />} label="Female" />

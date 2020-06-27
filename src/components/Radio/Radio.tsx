@@ -5,7 +5,7 @@ import SwitchBase, { SwitchBaseProps } from '../internal/SwitchBase';
 import RadioOnIcon from '../svg/radio_on.svg';
 import RadioOffIcon from '../svg/radio_off.svg';
 import useRadioGroup from '../RadioGroup/useRadioGroup';
-import createChainedFunction from '../utils/createChainedFunction';
+// import createChainedFunction from '../utils/createChainedFunction';
 
 const defaultRadioOnIcon = <img src={RadioOnIcon} alt="radio-on" />;
 const defaultRadioOffIcon = <img src={RadioOffIcon} alt="radio-off" />;
@@ -19,7 +19,6 @@ export interface RadioProps extends Omit<SwitchBaseProps, 'icon' | 'checkedIcon'
 function Radio(props: RadioProps) {
   const {
     className,
-    disabled,
     name: nameProp,
     checked: checkedProp,
     checkedIcon = defaultRadioOnIcon,
@@ -53,7 +52,7 @@ function Radio(props: RadioProps) {
       name={name}
       checked={checked}
       onChange={handleChange}
-      className={clsx({ checked, disabled }, className)}
+      className={clsx(className)}
       icon={icon}
       checkedIcon={checkedIcon}
       {...other}

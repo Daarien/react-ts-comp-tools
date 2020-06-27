@@ -1,10 +1,12 @@
-import React from "react";
-import styled from "../styled-components";
-import IconButton, { IconButtonProps } from "../IconButton";
-import clsx from "clsx";
+import React, { FocusEvent } from 'react';
+import clsx from 'clsx';
+import styled from '../styled-components';
+import IconButton, { IconButtonProps } from '../IconButton';
+import useControlled from '../utils/useControlled';
+import useFormControl from '../FormControl/useFormControl';
 
 export interface SwitchBaseProps
-  extends Omit<IconButtonProps, "children" | "onChange" | "type" | "value"> {
+  extends Omit<IconButtonProps, 'children' | 'onChange' | 'type' | 'value'> {
   autoFocus?: boolean;
   icon: React.ReactNode;
   checkedIcon: React.ReactNode;
@@ -19,8 +21,8 @@ export interface SwitchBaseProps
   defaultChecked?: boolean;
   inputRef?: React.Ref<HTMLInputElement>;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-  type?: React.InputHTMLAttributes<HTMLInputElement>["type"];
-  value?: React.InputHTMLAttributes<HTMLInputElement>["value"];
+  type?: React.InputHTMLAttributes<HTMLInputElement>['type'];
+  value?: React.InputHTMLAttributes<HTMLInputElement>['value'];
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -33,7 +35,7 @@ function SwitchBase(props: SwitchBaseProps) {
     tabIndex,
     className,
     checked: checkedProp,
-    disabled,
+    disabled: disabledProp,
     checkedIcon,
     icon,
     name,
@@ -43,13 +45,39 @@ function SwitchBase(props: SwitchBaseProps) {
     inputRef,
     inputProps,
     onChange,
+    onFocus,
+    onBlur,
     ...other
   } = props;
 
-  const isControlled = !!checkedProp;
-  const isChecked = isControlled ? checkedProp : !!defaultChecked;
+  const [checked, setCheckedState] = useControlled({
+    controlled: checkedProp,
+    default: Boolean(defaultChecked),
+    name: 'SwitchBase',
+    state: 'checked',
+  });
 
-  const [checked, setCheckedState] = React.useState(isChecked);
+  const muiFormControl = useFormControl();
+
+  const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+    if (onFocus) {
+      onFocus(event);
+    }
+
+    if (muiFormControl && muiFormControl.onFocus) {
+      muiFormControl.onFocus(event);
+    }
+  };
+
+  const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
+    if (onBlur) {
+      onBlur(event);
+    }
+
+    if (muiFormControl && muiFormControl.onBlur) {
+      muiFormControl.onBlur(event);
+    }
+  };
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newChecked = event.target.checked;
@@ -59,16 +87,26 @@ function SwitchBase(props: SwitchBaseProps) {
     }
   }
 
+  let disabled = disabledProp;
+
+  if (muiFormControl) {
+    if (typeof disabled === 'undefined') {
+      disabled = muiFormControl.disabled;
+    }
+  }
+
   return (
     <IconButton
       component="span"
       className={clsx({ checked, disabled }, className)}
       disabled={disabled}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
       {...other}
     >
       <input
         autoFocus={autoFocus}
-        checked={checked}
+        checked={checkedProp}
         defaultChecked={defaultChecked}
         disabled={disabled}
         id={id}
@@ -88,6 +126,7 @@ function SwitchBase(props: SwitchBaseProps) {
 }
 
 export default styled(SwitchBase)`
+  padding: 9px;
   input {
     cursor: inherit;
     position: absolute;

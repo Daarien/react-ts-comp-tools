@@ -54,7 +54,7 @@ function FormControlLabel(props: FormControlLabelProps) {
   return (
     <label
       className={clsx(
-        { [`labelPlacement-${labelPlacement}`]: labelPlacement !== 'end' },
+        { [`labelPlacement-${labelPlacement}`]: labelPlacement !== 'end', disabled },
         className
       )}
       {...other}
@@ -70,7 +70,7 @@ export default styled(FormControlLabel)`
   align-items: center;
   cursor: pointer;
   --webkit-tap-highlight-color: transparent;
-  margin-left: -8px;
+  margin-left: -11px;
   margin-right: 16px;
   &.disabled {
     cursor: default;
@@ -78,7 +78,7 @@ export default styled(FormControlLabel)`
   &.labelPlacement-start {
     flex-direction: row-reverse;
     margin-left: 16px;
-    margin-right: -8px;
+    margin-right: -11px;
   }
   .label {
     &.disabled {

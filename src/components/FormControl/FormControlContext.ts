@@ -5,8 +5,8 @@ type ContextFromPropsKey = 'error' | 'required' | 'disabled' | 'fullWidth';
 
 export interface FormControlState extends Pick<FormControlProps, ContextFromPropsKey> {
   focused: boolean;
-  onBlur: () => void;
-  onFocus: () => void;
+  onBlur: (e: React.FocusEvent<HTMLButtonElement>) => void;
+  onFocus: (e: React.FocusEvent<HTMLButtonElement>) => void;
 }
 
 const FormControlContext = React.createContext<FormControlState | undefined>(undefined);
