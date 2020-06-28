@@ -2,13 +2,13 @@ import React from 'react';
 import clsx from 'clsx';
 import styled from '../styled-components';
 import SwitchBase, { SwitchBaseProps } from '../internal/SwitchBase';
-import RadioOnIcon from '../svg/radio_on.svg';
-import RadioOffIcon from '../svg/radio_off.svg';
+import RadioOnIcon from '../svg-icons/RadioButtonChecked';
+import RadioOffIcon from '../svg-icons/RadioButtonUnchecked';
 import useRadioGroup from '../RadioGroup/useRadioGroup';
 // import createChainedFunction from '../utils/createChainedFunction';
 
-const defaultRadioOnIcon = <img src={RadioOnIcon} alt="radio-on" />;
-const defaultRadioOffIcon = <img src={RadioOffIcon} alt="radio-off" />;
+const defaultRadioOnIcon = <RadioOnIcon />;
+const defaultRadioOffIcon = <RadioOffIcon />;
 
 export interface RadioProps extends Omit<SwitchBaseProps, 'icon' | 'checkedIcon' | 'type'> {
   icon?: React.ReactNode;

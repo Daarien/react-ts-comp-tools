@@ -134,7 +134,6 @@ function Input(props: InputProps) {
   });
 
   fcs.focused = formControl ? formControl.focused : focused;
-  console.log('Input -> fcs', fcs);
 
   // The blur won't fire when the disabled state is set on a focused input.
   // We need to book keep the focused state manually.
