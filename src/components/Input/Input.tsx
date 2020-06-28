@@ -1,6 +1,9 @@
-import React from "react";
-import styled from "styled-components/macro";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
+import styled from '../styled-components';
+import formControlState from '../FormControl/formControlState';
+import FormControlContext from '../FormControl/FormControlContext';
+import { useFormControl } from '../FormControl';
 
 export interface InputBaseComponentProps
   extends React.HTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
@@ -11,21 +14,16 @@ export interface InputBaseComponentProps
 export interface InputProps
   extends Omit<
     React.HTMLAttributes<HTMLDivElement>,
-    "children" | "onChange" | "onKeyUp" | "onKeyDown" | "onBlur" | "onFocus"
+    'children' | 'onChange' | 'onKeyUp' | 'onKeyDown' | 'onBlur' | 'onFocus'
   > {
-  "aria-describedby"?: string;
+  'aria-describedby'?: string;
   autoComplete?: string;
   autoFocus?: boolean;
-  /**
-   * The default `input` element value. Use when the component is not controlled.
-   */
-  defaultValue?: string | number | readonly string[];
   disabled?: boolean;
   error?: boolean;
-  /**
-   * If `true`, the input will take up the full width of its container.
-   */
   fullWidth?: boolean;
+  variant?: 'default' | 'outlined';
+  size?: 'small' | 'medium' | 'large';
   /**
    * The id of the `input` element.
    */
@@ -36,7 +34,7 @@ export interface InputProps
    */
   inputComponent?: React.ElementType<InputBaseComponentProps>;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * [Attributes] applied to the `input` element.
    */
   inputProps?: InputBaseComponentProps;
   /**
@@ -44,39 +42,21 @@ export interface InputProps
    */
   inputRef?: React.Ref<any>;
   /**
-   * If `dense`, will adjust vertical spacing. This is normally obtained via context from
-   * FormControl.
-   */
-  margin?: "dense" | "none";
-  /**
    * If `true`, a textarea element will be rendered.
    */
-  multiline?: boolean;
-  /**
-   * Name attribute of the `input` element.
-   */
   name?: string;
-  /**
-   * Callback fired when the input is blurred.
-   *
-   * Notice that the first argument (event) might be undefined.
-   */
-  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  /**
-   * Callback fired when the value is changed.
-   *
-   * @param {object} event The event source of the callback.
-   * You can pull out the new value by accessing `event.target.value` (string).
-   */
+  onBlur?: (e?: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  onFocus?: (e?: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-  onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  onKeyDown?: React.KeyboardEventHandler<
-    HTMLTextAreaElement | HTMLInputElement
-  >;
+  onKeyDown?: React.KeyboardEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   onKeyUp?: React.KeyboardEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   placeholder?: string;
   readOnly?: boolean;
   required?: boolean;
+  multiline?: boolean;
+  /**
+   * Name attribute of the `input` element.
+   */
   /**
    * Number of rows to display when multiline option is set to true.
    */
@@ -97,11 +77,15 @@ export interface InputProps
    * The value of the `input` element, required for a controlled component.
    */
   value?: string | number | readonly string[];
+  /**
+   * The default `input` element value. Use when the component is not controlled.
+   */
+  defaultValue?: string | number | readonly string[];
 }
 
 function Input(props: InputProps) {
   const {
-    "aria-describedby": ariaDescribedby,
+    'aria-describedby': ariaDescribedby,
     autoComplete,
     autoFocus,
     className,
@@ -110,10 +94,11 @@ function Input(props: InputProps) {
     error,
     fullWidth = false,
     id,
-    inputComponent = "input",
+    inputComponent = 'input',
+    variant = 'default',
+    size,
     inputProps: inputPropsProp = {},
     inputRef: inputRefProp,
-    margin,
     multiline = false,
     name,
     onBlur,
@@ -128,23 +113,44 @@ function Input(props: InputProps) {
     rowsMax,
     rowsMin,
     required,
-    type = "text",
-    value,
+    type = 'text',
+    value: valueProp,
     ...other
   } = props;
 
-  const [focused, setFocused] = React.useState(false);
+  const value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
+  const { current: isControlled } = React.useRef(value != null);
 
   const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>();
 
-  const { current: isControlled } = React.useRef(value != null);
+  const [focused, setFocused] = React.useState(false);
 
-  const handleFocus = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const formControl = useFormControl();
+
+  const fcs = formControlState({
+    props,
+    formControl,
+    states: ['disabled', 'error', 'required', 'variant', 'size'],
+  });
+
+  fcs.focused = formControl ? formControl.focused : focused;
+  console.log('Input -> fcs', fcs);
+
+  // The blur won't fire when the disabled state is set on a focused input.
+  // We need to book keep the focused state manually.
+  React.useEffect(() => {
+    if (!formControl && disabled && focused) {
+      setFocused(false);
+      if (onBlur) {
+        onBlur();
+      }
+    }
+  }, [formControl, disabled, focused, onBlur]);
+
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     // Fix a bug with IE 11 where the focus/blur events are triggered
     // while the input is disabled.
-    if (disabled) {
+    if (fcs.disabled) {
       event.stopPropagation();
       return;
     }
@@ -156,12 +162,14 @@ function Input(props: InputProps) {
       inputPropsProp.onFocus(event);
     }
 
-    setFocused(true);
+    if (formControl && formControl.onFocus) {
+      formControl.onFocus(event);
+    } else {
+      setFocused(true);
+    }
   };
 
-  const handleBlur = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (onBlur) {
       onBlur(event);
     }
@@ -169,18 +177,21 @@ function Input(props: InputProps) {
       inputPropsProp.onBlur(event);
     }
 
-    setFocused(false);
+    if (formControl && formControl.onBlur) {
+      formControl.onBlur(event);
+    } else {
+      setFocused(false);
+    }
   };
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (!isControlled) {
       const element = event.target || inputRef.current;
       if (element == null) {
         throw new Error(
-          "SberUser-UI: Expected valid input target. " +
-            "Did you use a custom `inputComponent` and forget to forward refs? "
+          'SU-UI: Expected valid input target. ' +
+            'Did you use a custom `inputComponent` and forget to forward refs? ' +
+            'See https://material-ui.com/r/input-component-ref-interface for more info.'
         );
       }
     }
@@ -209,8 +220,23 @@ function Input(props: InputProps) {
     ...inputPropsProp,
     ref: inputRef,
   };
-  if (multiline) {
-    InputComponent = "textarea";
+
+  if (typeof InputComponent !== 'string') {
+    inputProps = {
+      // Rename ref to inputRef as we don't know the
+      // provided `inputComponent` structure.
+      inputRef,
+      type,
+      ...inputProps,
+      ref: null,
+    };
+  } else if (multiline) {
+    InputComponent = 'textarea';
+    inputProps = {
+      rows,
+      rowsMax,
+      ...inputProps,
+    };
   } else {
     inputProps = {
       type,
@@ -221,47 +247,90 @@ function Input(props: InputProps) {
   return (
     <div
       onClick={handleClick}
+      className={clsx(
+        {
+          small: fcs.size === 'small',
+          large: fcs.size === 'large',
+          outlined: fcs.variant === 'outlined',
+          focused: fcs.focused,
+          disabled: fcs.disabled,
+          error: fcs.error,
+          fullWidth,
+          multiline,
+        },
+        className
+      )}
       {...other}
-      className={clsx(className, { focused, disabled, fullWidth, error })}
     >
-      <InputComponent
-        className={clsx("InputBase", inputPropsProp.className)}
-        value={value}
-        aria-describedby={ariaDescribedby}
-        autoComplete={autoComplete}
-        autoFocus={autoFocus}
-        defaultValue={defaultValue}
-        disabled={disabled}
-        id={id}
-        name={name}
-        placeholder={placeholder}
-        readOnly={readOnly}
-        required={required}
-        rows={rows}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        {...inputProps}
-      />
+      <FormControlContext.Provider value={undefined}>
+        <InputComponent
+          aria-invalid={fcs.error}
+          aria-describedby={ariaDescribedby}
+          autoComplete={autoComplete}
+          autoFocus={autoFocus}
+          defaultValue={defaultValue}
+          disabled={fcs.disabled}
+          id={id}
+          name={name}
+          placeholder={placeholder}
+          readOnly={readOnly}
+          required={fcs.required}
+          rows={rows}
+          value={value}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          onChange={handleChange}
+          className={clsx(
+            'InputBase',
+            {
+              disabled: fcs.disabled,
+              inputTypeSearch: type === 'search',
+              inputMultiline: multiline,
+            },
+            inputPropsProp.className
+          )}
+          {...inputProps}
+        />
+      </FormControlContext.Provider>
     </div>
   );
 }
 
 export default styled(Input)`
   color: ${({ theme }) => theme.palette.text.primary};
-  border: 1px solid lightgray;
-  border-radius: 4px;
-  padding: 10px 20px;
-  line-height: 1.1876em;
   box-sizing: border-box;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   position: relative;
   display: inline-flex;
   align-items: center;
   cursor: text;
-
+  &.small {
+    padding: 6px 12px;
+  }
+  &.large {
+    padding: 12px 20px;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  &.outlined {
+    border: 2px solid;
+    border-color: ${({ theme }) => theme.palette.border.secondary};
+    &.focused {
+      border-color: ${({ theme }) => theme.palette.border.primary};
+    }
+    &.disabled {
+      border-color: ${({ theme }) => theme.palette.border.disabled};
+    }
+  }
   &.disabled {
     color: ${({ theme }) => theme.palette.text.disabled};
     cursor: default;
+  }
+  &.multiline {
+    padding: 6px 0;
   }
   &.fullWidth {
     width: 100%;
@@ -269,13 +338,16 @@ export default styled(Input)`
 
   .InputBase {
     font: inherit;
+    letter-spacing: inherit;
+    color: currentColor;
+    padding: 0;
     border: 0;
-    box-sizing: border-box;
+    box-sizing: content-box;
     background: none;
-    margin: 0;
+    margin: 0; /** Reset for Safari */
     display: block;
     min-width: 0;
-    width: 100%;
+    width: 100%; /** Fix IE 11 width issue */
     -webkit-tap-highlight-color: transparent;
     &::placeholder {
       color: currentColor;
@@ -284,6 +356,17 @@ export default styled(Input)`
     }
     &:focus {
       outline: none;
+    }
+    &.disabled {
+      opacity: 1; /** Reset iOS opacity */
+    }
+    &.inputMultiline {
+      height: auto;
+      resize: none;
+      padding: 0;
+    }
+    &.inputTypeSearch {
+      appearance: textfield;
     }
   }
 `;

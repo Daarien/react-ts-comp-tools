@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent } from 'react';
 import {
   TextField,
   Checkbox,
+  Input,
   Radio,
   RadioGroup,
   FormLabel,
@@ -20,18 +21,47 @@ export default function InputsPage() {
   return (
     <Container>
       <h2>Inputs expamles</h2>
-      <hr />
-      <h4>Simple textfield with placeholer</h4>
+      <h3>Inputs</h3>
+      <h4>Outlined inputs</h4>
       <section>
-        <TextField placeholder="placeholer" />
+        <Box>
+          <Input defaultValue="small outlined" variant="outlined" size="small" />
+        </Box>
+        <Box>
+          <Input defaultValue="medium oulined" variant="outlined" />
+        </Box>
+        <Box>
+          <Input defaultValue="large outlined" variant="outlined" size="large" />
+        </Box>
       </section>
       <h4>Textfield with label, default value and helper text</h4>
       <section>
-        <TextField
-          label="Simple text field"
-          defaultValue="Default value"
-          helperText="This is helper text"
-        />
+        <Box>
+          <TextField
+            size="small"
+            variant="outlined"
+            label="Input label"
+            defaultValue="Small"
+            helperText="This is helper text"
+          />
+        </Box>
+        <Box>
+          <TextField
+            variant="outlined"
+            label="Input label"
+            defaultValue="Default"
+            helperText="This is helper text"
+          />
+        </Box>
+        <Box>
+          <TextField
+            size="large"
+            variant="outlined"
+            label="Input label"
+            defaultValue="Large"
+            helperText="This is helper text"
+          />
+        </Box>
       </section>
       <h3>Checkboxes</h3>
       <section>
@@ -78,7 +108,7 @@ const Box = styled.div`
 `;
 
 function RadioButtonsGroup() {
-  const [value, setValue] = React.useState('female');
+  const [value, setValue] = React.useState('macos');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -90,12 +120,12 @@ function RadioButtonsGroup() {
 
   return (
     <FormControl component="fieldset" onChange={handleFormControlEventBubbling}>
-      <FormLabel component="legend">Gender</FormLabel>
-      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
+      <FormLabel component="legend">Choose OS</FormLabel>
+      <RadioGroup aria-label="gender" name="os" value={value} onChange={handleChange}>
+        <FormControlLabel value="macos" control={<Radio />} label="Mac OS" />
+        <FormControlLabel value="windows" control={<Radio />} label="Windows" />
         <FormControlLabel value="other" control={<Radio />} label="Other" />
-        <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" />
+        <FormControlLabel value="dos" disabled control={<Radio />} label="(Disabled option)" />
       </RadioGroup>
     </FormControl>
   );

@@ -1,6 +1,8 @@
-import React from "react";
-import styled from "styled-components/macro";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
+import styled from '../styled-components';
+import formControlState from '../FormControl/formControlState';
+import useFormControl from '../FormControl/useFormControl';
 
 export interface FormHelperTextProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
@@ -11,24 +13,24 @@ export interface FormHelperTextProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 function FormHelperText(props: FormHelperTextProps) {
-  const {
-    children,
-    className,
-    disabled,
-    error,
-    focused,
-    required,
-    ...other
-  } = props;
+  const { children, className, disabled, error, focused, required, ...other } = props;
+
+  const formControl = useFormControl();
+  const fcs = formControlState({
+    props,
+    formControl,
+    states: ['size', 'variant', 'disabled', 'error', 'focused', 'required'],
+  });
 
   return (
     <p
       className={clsx(
         {
-          focused,
-          disabled,
-          error,
-          required,
+          large: fcs.size === 'large',
+          focused: fcs.focused,
+          disabled: fcs.disabled,
+          required: fcs.required,
+          error: fcs.error,
         },
         className
       )}
@@ -41,9 +43,14 @@ function FormHelperText(props: FormHelperTextProps) {
 
 export default styled(FormHelperText)`
   color: ${({ theme }) => theme.palette.text.secondary};
-  font-size: 10px;
   text-align: left;
-  margin: 3px 0 0 0;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  &.large {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
   &.disabled {
     color: ${({ theme }) => theme.palette.text.disabled};
   }

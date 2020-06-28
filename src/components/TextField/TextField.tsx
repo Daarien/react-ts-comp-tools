@@ -1,28 +1,17 @@
-import React, { HTMLAttributes } from "react";
-import Input, { InputProps as StandardInputProps } from "../Input";
-import InputLabel, { InputLabelProps } from "../InputLabel";
-import FormHelperText, { FormHelperTextProps } from "../FormHelperText";
-import FormControl from "../FormControl";
+import React, { HTMLAttributes } from 'react';
+import Input, { InputProps as StandardInputProps } from '../Input';
+import InputLabel, { InputLabelProps } from '../InputLabel';
+import FormHelperText, { FormHelperTextProps } from '../FormHelperText';
+import FormControl from '../FormControl';
 
 export interface TextFieldProps
-  extends Omit<
-    HTMLAttributes<HTMLDivElement>,
-    "defaultValue" | "onFocus" | "onBlur" | "onChange"
-  > {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onFocus' | 'onBlur' | 'onChange'> {
   autoComplete?: string;
-
   autoFocus?: boolean;
-
-  children?: React.ReactNode;
-
   defaultValue?: string | number;
-
   disabled?: boolean;
-
   error?: boolean;
-
   fullWidth?: boolean;
-
   helperText?: React.ReactNode;
   FormHelperTextProps?: Partial<FormHelperTextProps>;
   /**
@@ -39,41 +28,34 @@ export interface TextFieldProps
    */
   label?: React.ReactNode;
   InputLabelProps?: Partial<InputLabelProps>;
-
   multiline?: boolean;
-
   name?: string;
-
   placeholder?: string;
-
   required?: boolean;
-
   rows?: number;
-
   rowsMax?: string | number;
-
   /**
    * The size of the text field.
    */
-  size?: "small" | "medium";
+  size?: 'small' | 'medium' | 'large';
+  variant?: 'default' | 'outlined';
   /**
    * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
    */
-  type?: React.InputHTMLAttributes<unknown>["type"];
+  type?: React.InputHTMLAttributes<unknown>['type'];
   /**
    * The value of the `input` element, required for a controlled component.
    */
   value?: string | number;
-  onBlur?: StandardInputProps["onBlur"];
   /**
    * Callback fired when the value is changed.
    *
    * @param {object} event The event source of the callback.
    * You can pull out the new value by accessing `event.target.value` (string).
    */
-  onChange?: StandardInputProps["onChange"];
-  onFocus?: StandardInputProps["onFocus"];
-
+  onChange?: StandardInputProps['onChange'];
+  onFocus?: StandardInputProps['onFocus'];
+  onBlur?: StandardInputProps['onBlur'];
   /**
    * Props applied to the Input element.
    * It will be a [`FilledInput`](/api/filled-input/),
@@ -84,7 +66,7 @@ export interface TextFieldProps
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
-  inputProps?: StandardInputProps["inputProps"];
+  inputProps?: StandardInputProps['inputProps'];
 }
 
 export default function TextField(props: TextFieldProps) {
@@ -94,8 +76,9 @@ export default function TextField(props: TextFieldProps) {
     // children,
     // className,
     defaultValue,
+    variant,
     disabled = false,
-    // error = false,
+    error = false,
     fullWidth = false,
     helperText,
     id,
@@ -109,21 +92,28 @@ export default function TextField(props: TextFieldProps) {
     onChange,
     onFocus,
     placeholder,
-    // required = false,
+    required = false,
     rows,
     rowsMax,
     type,
     value,
     FormHelperTextProps,
     InputLabelProps,
-    // ...other
+    ...other
   } = props;
 
   const helperTextId = helperText && id ? `${id}-helper-text` : undefined;
   const inputLabelId = label && id ? `${id}-label` : undefined;
 
   return (
-    <FormControl>
+    <FormControl
+      disabled={disabled}
+      error={error}
+      fullWidth={fullWidth}
+      required={required}
+      variant={variant}
+      {...other}
+    >
       {label && (
         <InputLabel htmlFor={id} id={inputLabelId} {...InputLabelProps}>
           {label}

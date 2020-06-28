@@ -9,6 +9,8 @@ export interface FormControlProps extends React.HTMLAttributes<HTMLDivElement> {
   focused?: boolean;
   required?: boolean;
   fullWidth?: boolean;
+  variant?: 'default' | 'outlined';
+  size?: 'small' | 'medium' | 'large';
   component?: React.ElementType;
 }
 
@@ -22,7 +24,8 @@ function FormControl(props: FormControlProps) {
     fullWidth = false,
     focused: visuallyFocused,
     component: Component = 'div',
-
+    size,
+    variant,
     ...other
   } = props;
 
@@ -34,10 +37,12 @@ function FormControl(props: FormControlProps) {
   }
 
   const childContext = {
-    disabled,
+    size,
     error,
+    variant,
     focused,
     required,
+    disabled,
     fullWidth,
     onBlur: () => {
       setFocused(false);

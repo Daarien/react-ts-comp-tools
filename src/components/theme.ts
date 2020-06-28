@@ -1,27 +1,32 @@
 export const theme = {
   palette: {
-    type: "light",
+    type: 'light',
     primary: {
-      main: "#00a523",
-      light: "lightgreen",
-      dark: "green",
+      main: '#00a523',
+      light: 'lightgreen',
+      dark: 'green',
     },
     secondary: {
-      main: "#6c6c6c",
-      light: "lightgray",
-      dark: "darkgray",
+      main: '#6C6C6C',
+      light: 'lightgray',
+      dark: 'darkgray',
     },
     text: {
-      primary: "#22222",
-      secondary: "gray",
-      disabled: "lightgray",
+      primary: '#464646',
+      secondary: '#6C6C6C',
+      disabled: '#B1B1B1',
     },
     error: {
-      main: "red",
+      main: '#DB2C2C',
+    },
+    border: {
+      primary: '#0096FF',
+      secondary: '#B1B1B1',
+      disabled: '#CACACA',
     },
     action: {
-      active: "#00a523",
-      disabled: "lightgray",
+      active: '#00a523',
+      disabled: 'lightgray',
     },
   },
 } as Theme;
@@ -38,6 +43,7 @@ export interface Palette {
   warning: PaletteColor;
   info: PaletteColor;
   success: PaletteColor;
+  border: TypeBorder;
   background: TypeBackground;
   text: TypeText;
   action: TypeAction;
@@ -49,13 +55,18 @@ export interface PaletteColor {
   dark: string;
 }
 
-export type PaletteType = "light" | "dark";
+export type PaletteType = 'light' | 'dark';
 
 export interface TypeText {
   primary: string;
   secondary: string;
   disabled: string;
   hint: string;
+}
+export interface TypeBorder {
+  primary: string;
+  secondary: string;
+  disabled: string;
 }
 
 export interface TypeBackground {
