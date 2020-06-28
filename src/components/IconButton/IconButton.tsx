@@ -1,18 +1,14 @@
-import React from "react";
-import styled from "../styled-components";
-import BaseButton, { BaseButtonProps } from "../BaseButton";
-import clsx from "clsx";
+import React from 'react';
+import styled from '../styled-components';
+import BaseButton, { ButtonBaseProps } from '../ButtonBase';
+import clsx from 'clsx';
 
-export interface IconButtonProps extends BaseButtonProps {}
+export interface IconButtonProps extends ButtonBaseProps {}
 
 function IconButton(props: IconButtonProps) {
   const { children, className, disabled, ...other } = props;
   return (
-    <BaseButton
-      className={clsx({ disabled }, className)}
-      disabled={disabled}
-      {...other}
-    >
+    <BaseButton className={clsx({ disabled }, className)} disabled={disabled} {...other}>
       <span className="IconButton-label">{children}</span>
     </BaseButton>
   );

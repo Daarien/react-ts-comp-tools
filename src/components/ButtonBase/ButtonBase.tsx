@@ -1,38 +1,30 @@
-import React from "react";
-import styled from "../styled-components";
-import clsx from "clsx";
+import React from 'react';
+import styled from '../styled-components';
+import clsx from 'clsx';
 
-export interface BaseButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonBaseProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   component?: React.ElementType;
   href?: string;
 }
 
-function BaseButton(props: BaseButtonProps) {
-  const {
-    children,
-    className,
-    component = "button",
-    type = "button",
-    disabled,
-    ...other
-  } = props;
+function BaseButton(props: ButtonBaseProps) {
+  const { children, className, component = 'button', type = 'button', disabled, ...other } = props;
 
   let ComponentProp = component;
 
-  if (ComponentProp === "button" && other.href) {
-    ComponentProp = "a";
+  if (ComponentProp === 'button' && other.href) {
+    ComponentProp = 'a';
   }
 
   const buttonProps = {} as React.ButtonHTMLAttributes<HTMLButtonElement>;
-  if (ComponentProp === "button") {
+  if (ComponentProp === 'button') {
     buttonProps.type = type;
     buttonProps.disabled = disabled;
   } else {
-    if (ComponentProp !== "a" || !other.href) {
-      buttonProps.role = "button";
+    if (ComponentProp !== 'a' || !other.href) {
+      buttonProps.role = 'button';
     }
-    buttonProps["aria-disabled"] = disabled;
+    buttonProps['aria-disabled'] = disabled;
   }
 
   return (
@@ -51,7 +43,7 @@ function BaseButton(props: BaseButtonProps) {
   );
 }
 
-export default styled(BaseButton)<BaseButtonProps>`
+export default styled(BaseButton)<ButtonBaseProps>`
   cursor: pointer;
   display: inline-flex;
   align-items: center;
