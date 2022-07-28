@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-unfetch';
 import { ErrorResponse, TQueryParams } from '../interfaces';
 import { AnnounceStatus } from '../interfaces/announcement';
 

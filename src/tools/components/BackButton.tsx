@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from 'react';
-import Router from 'next/router';
+import { FunctionComponent } from 'react';
 import { IButtonProps } from '../interfaces';
-import { Button, FaIcon } from '.';
+import { Button } from '.';
 
 interface IBackButtonProps extends IButtonProps {
   to?: string;
@@ -10,14 +9,14 @@ interface IBackButtonProps extends IButtonProps {
 const BackButton: FunctionComponent<IBackButtonProps> = ({ to, children, ...other }) => {
   function handleClick() {
     if (to) {
-      Router.push(to);
+      window.history.pushState(null, '', to);
     } else {
-      Router.back();
+      window.history.back();
     }
   }
   return (
     <Button onClick={handleClick} {...other}>
-      <FaIcon icon="arrow-left" className="mr-2" />
+      <span>Arrow left</span>
       {children}
     </Button>
   );

@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, { mode }) => {
@@ -10,7 +11,7 @@ module.exports = (env, { mode }) => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: 'awesome-typescript-loader',
+          use: "ts-loader",
           exclude: /node_modules/,
         },
         { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
@@ -23,6 +24,11 @@ module.exports = (env, { mode }) => {
     devtool: 'source-map',
     resolve: {
       extensions: ['.tsx', '.jsx', '.ts', '.js', '.json'],
+      alias: {
+        components: path.resolve(__dirname, './src/tools/components'),
+        interfaces: path.resolve(__dirname, './src/tools/interfaces'),
+        utils: path.resolve(__dirname, './src/tools/utils'),
+      },
     },
     plugins: [
       new HtmlWebpackPlugin({

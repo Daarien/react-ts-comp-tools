@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import { Component, HTMLAttributes, ReactNode } from 'react';
 import ErrorBoundary from './ErrorBoundary';
 import Paper from './Paper';
 // import { Theme } from '../../store/theme/themeSettings';
@@ -34,12 +34,14 @@ const Body = styled('div')`
   width: ${({ width }: any) => (width ? `${width}px` : '')};
 `;
 
-interface IContent {}
+interface IContent {
+  children: ReactNode;
+}
 interface IBody extends HTMLAttributes<HTMLDivElement> {
   width?: number;
 }
 
-export default class Content extends React.Component<IContent> {
+export default class Content extends Component<IContent> {
   static Header = (props: IContent) => <Header {...props} />;
 
   static Title = (props: IContent) => <Title {...props} />;

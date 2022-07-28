@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import styled from 'styled-components';
 import { Dropdown, SplitButton, Pagination, Spinner } from 'react-bootstrap';
 import Flex from './Flex';
@@ -14,7 +14,7 @@ interface Props {
   onClick: (params: Params) => void;
 }
 
-export default class Pager extends React.Component<Props> {
+export default class Pager extends Component<Props> {
   state = {
     segmentation: 5,
     allSegments: 0,
@@ -45,7 +45,7 @@ export default class Pager extends React.Component<Props> {
     }
   }
 
-  handleClick = event => {
+  handleClick = (event) => {
     event.stopPropagation();
     const { segmentation, currentSegment } = this.state;
     const { pageNumber, pages } = this.props;
@@ -71,7 +71,7 @@ export default class Pager extends React.Component<Props> {
     }
   };
 
-  clickPage = page => {
+  clickPage = (page) => {
     const { pageNumber } = this.props;
     if (page !== pageNumber) this.setPage(page);
   };
@@ -81,7 +81,7 @@ export default class Pager extends React.Component<Props> {
     this.props.onClick({ pageNumber: page, pageSize: this.props.pageSize });
   };
 
-  setPageSize = e => {
+  setPageSize = (e) => {
     const id = parseInt(e.target.id);
     if (id !== this.props.pageSize) {
       this.props.onClick({ pageNumber: 1, pageSize: id });
@@ -129,13 +129,13 @@ export default class Pager extends React.Component<Props> {
         <section>
           <span className="mr-2">Строк на странице:</span>
           <SplitButton title={pageSize} variant="danger" id="pageSizeToggler">
-            <Dropdown.Item onClick={setPageSize} id={5}>
+            <Dropdown.Item onClick={setPageSize} id="5">
               5
             </Dropdown.Item>
-            <Dropdown.Item onClick={setPageSize} id={10}>
+            <Dropdown.Item onClick={setPageSize} id="10">
               10
             </Dropdown.Item>
-            <Dropdown.Item onClick={setPageSize} id={20}>
+            <Dropdown.Item onClick={setPageSize} id="20">
               20
             </Dropdown.Item>
           </SplitButton>

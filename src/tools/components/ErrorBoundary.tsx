@@ -1,8 +1,11 @@
-﻿import React from 'react';
+﻿import { Component, ReactNode } from 'react';
 import Flex from './Flex';
 
-export default class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
-  constructor(props: {}) {
+export default class ErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props) {
     super(props);
     this.state = { hasError: false };
   }
@@ -16,7 +19,7 @@ export default class ErrorBoundary extends React.Component<{}, { hasError: boole
 
   render() {
     return (
-      <React.Fragment>
+      <div>
         {this.state.hasError ? (
           // You can render any custom fallback UI
           <Flex justify="center">
@@ -25,7 +28,7 @@ export default class ErrorBoundary extends React.Component<{}, { hasError: boole
         ) : (
           this.props.children
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }

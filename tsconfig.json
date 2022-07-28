@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2015",
+      "es2016"
+    ],
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -11,7 +16,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noEmit": false,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "declaration": true,
     "sourceMap": false,
     "noUnusedLocals": true,
@@ -19,8 +24,21 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "noImplicitAny": false,
-    "outDir": "."
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "components": [
+        "./src/tools/components/"
+      ],
+      "components/*": [
+        "./src/tools/components/*"
+      ]
+    }
   },
-  "include": ["./src/tools"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
