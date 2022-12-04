@@ -1,10 +1,10 @@
-import React from "react";
+import { ButtonHTMLAttributes, ElementType } from "react";
 import styled from "../styled-components";
 import clsx from "clsx";
 
 export interface BaseButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  component?: React.ElementType;
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
+  component?: ElementType;
   href?: string;
 }
 

@@ -1,9 +1,9 @@
-import React from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 import styled from "styled-components/macro";
 import clsx from "clsx";
 
-export interface FormHelperTextProps extends React.HTMLAttributes<HTMLElement> {
-  children?: React.ReactNode;
+export interface FormHelperTextProps extends HTMLAttributes<HTMLElement> {
+  children?: ReactNode;
   disabled?: boolean;
   error?: boolean;
   focused?: boolean;
@@ -11,15 +11,8 @@ export interface FormHelperTextProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 function FormHelperText(props: FormHelperTextProps) {
-  const {
-    children,
-    className,
-    disabled,
-    error,
-    focused,
-    required,
-    ...other
-  } = props;
+  const { children, className, disabled, error, focused, required, ...other } =
+    props;
 
   return (
     <p

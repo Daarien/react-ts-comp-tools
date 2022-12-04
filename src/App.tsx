@@ -1,20 +1,14 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "./components/styled-components";
-
 import { theme } from "./components/theme";
 import MainPage from "./pages/Main";
 
-function App() {
+export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Switch>
-          <Route component={MainPage} />
-        </Switch>
+        <MainPage />
       </BrowserRouter>
     </ThemeProvider>
   );
 }
-
-export default App;

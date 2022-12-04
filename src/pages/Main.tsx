@@ -1,4 +1,3 @@
-import React from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Flex, Paper } from "../components";
@@ -35,7 +34,7 @@ function NavPage() {
   return (
     <main>
       <ul>
-        {routes.map(route => (
+        {routes.map((route) => (
           <li key={route}>
             <Link to={`/${route}`}>{route}</Link>
           </li>

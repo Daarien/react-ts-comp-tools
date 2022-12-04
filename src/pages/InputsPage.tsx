@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { TextField, Checkbox } from "../components";
 import styled from "../components/styled-components";
 

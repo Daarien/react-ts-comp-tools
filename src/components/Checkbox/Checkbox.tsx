@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactNode } from "react";
 import styled from "../styled-components";
 import SwitchBase, { SwitchBaseProps } from "../internal/SwitchBase";
 import CheckOnIcon from "../svg/check_on.svg";
@@ -10,8 +10,8 @@ const defaultIcon = <img src={CheckOffIcon} alt="check-off" />;
 
 export interface CheckboxProps
   extends Omit<SwitchBaseProps, "checkedIcon" | "icon" | "type"> {
-  icon?: React.ReactNode;
-  checkedIcon?: React.ReactNode;
+  icon?: ReactNode;
+  checkedIcon?: ReactNode;
   size?: "small" | "medium";
 }
 

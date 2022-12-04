@@ -1,4 +1,9 @@
-import React, { HTMLAttributes } from "react";
+import type {
+  Ref,
+  ReactNode,
+  HTMLAttributes,
+  InputHTMLAttributes,
+} from "react";
 import Input, { InputProps as StandardInputProps } from "../Input";
 import InputLabel, { InputLabelProps } from "../InputLabel";
 import FormHelperText, { FormHelperTextProps } from "../FormHelperText";
@@ -13,7 +18,7 @@ export interface TextFieldProps
 
   autoFocus?: boolean;
 
-  children?: React.ReactNode;
+  children?: ReactNode;
 
   defaultValue?: string | number;
 
@@ -23,7 +28,7 @@ export interface TextFieldProps
 
   fullWidth?: boolean;
 
-  helperText?: React.ReactNode;
+  helperText?: ReactNode;
   FormHelperTextProps?: Partial<FormHelperTextProps>;
   /**
    * The id of the `input` element.
@@ -33,11 +38,11 @@ export interface TextFieldProps
   /**
    * Pass a ref to the `input` element.
    */
-  inputRef?: React.Ref<any>;
+  inputRef?: Ref<any>;
   /**
    * The label content.
    */
-  label?: React.ReactNode;
+  label?: ReactNode;
   InputLabelProps?: Partial<InputLabelProps>;
 
   multiline?: boolean;
@@ -59,7 +64,7 @@ export interface TextFieldProps
   /**
    * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
    */
-  type?: React.InputHTMLAttributes<unknown>["type"];
+  type?: InputHTMLAttributes<unknown>["type"];
   /**
    * The value of the `input` element, required for a controlled component.
    */

@@ -1,16 +1,16 @@
-import React from "react";
+import { useState, useRef, HTMLAttributes } from "react";
 import styled from "styled-components/macro";
 import clsx from "clsx";
 
 export interface InputBaseComponentProps
-  extends React.HTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+  extends HTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   // Accommodate arbitrary additional props coming from the `inputProps` prop
   [arbitrary: string]: any;
 }
 
 export interface InputProps
   extends Omit<
-    React.HTMLAttributes<HTMLDivElement>,
+    HTMLAttributes<HTMLDivElement>,
     "children" | "onChange" | "onKeyUp" | "onKeyDown" | "onBlur" | "onFocus"
   > {
   "aria-describedby"?: string;
@@ -133,11 +133,11 @@ function Input(props: InputProps) {
     ...other
   } = props;
 
-  const [focused, setFocused] = React.useState(false);
+  const [focused, setFocused] = useState(false);
 
-  const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>();
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>();
 
-  const { current: isControlled } = React.useRef(value != null);
+  const { current: isControlled } = useRef(value != null);
 
   const handleFocus = (
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>

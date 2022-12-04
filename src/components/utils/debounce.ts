@@ -17,7 +17,7 @@ export default function debounce<T extends (...args: any[]) => any>(
       func.apply(that, args);
     };
     clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
+    timeout = window.setTimeout(later, wait);
   }
 
   debounced.clear = () => {
